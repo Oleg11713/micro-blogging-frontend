@@ -1,0 +1,28 @@
+.comments-container{
+  max-width: 550px;
+  width: 100%;
+
+  .comment {
+    margin-top: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #575556;
+
+    .tools {
+      display: flex;
+      justify-content: flex-end;
+
+      .delete-icon {
+        margin-left: 10px;
+      }
+    }
+
+    .info {
+      padding: 10px;
+
+      .content {
+        display: flex;
+        text-align: start;
+      }
+    }
+  }
+}

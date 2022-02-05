@@ -1,0 +1,73 @@
+.main-page {
+  margin: 0 auto;
+  max-width: 1000px;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  border-radius: 4.8px;
+  padding: 40px 100px 64px;
+  display: flex;
+  flex-direction: column;
+  color: #504f50;
+
+  @media (max-width: 1020px) {
+    padding: 64px 20px;
+  }
+
+  a {
+    color: #504f50;
+  }
+
+  .add-post-button {
+    position: relative;
+    margin: 40px 0;
+  }
+
+  .post-container {
+    max-width: 500px;
+    width: 100%;
+
+    .user-display-name{
+      display: flex;
+      justify-content: flex-start;
+      border-top: 1px solid #575556;
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+
+    .post {
+
+      .tools {
+        display: flex;
+        justify-content: flex-end;
+
+        .delete-icon {
+          margin-left: 10px;
+        }
+      }
+
+      .info {
+        padding: 10px;
+        margin-top: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+        .title {
+          font-weight: bold;
+          font-style: italic;
+          margin-bottom: 10px;
+        }
+
+        .content {
+          display: flex;
+          text-align: start;
+        }
+      }
+
+      .comment-icon {
+        display: flex;
+        justify-content: flex-start;
+        margin: 5px 0 5px 10px;
+      }
+    }
+  }
+}

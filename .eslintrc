@@ -1,0 +1,60 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "import/no-unresolved": 0,
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "arrowParens": "avoid",
+        "endOfLine": "auto",
+        "arrowParen": "avoid"
+      }
+    ],
+    "no-use-before-define": "off",
+    "import/extensions": [
+      "error",
+      "never",
+      {
+        "json": "always"
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "react/prop-types": 0,
+    "no-shadow": "off",
+    "semi": ["error", "always"],
+    "react/jsx-props-no-spreading": "off",
+    "react/forbid-prop-types": "off",
+    "no-nested-ternary": "off",
+    "react/require-default-props": "off",
+    "default-param-last": "off",
+    "arrow-parens": ["off"],
+    "no-param-reassign": "off",
+    "comma-dangle": ["error", "always-multiline"],
+    "no-plusplus": "off"
+  }
+}
