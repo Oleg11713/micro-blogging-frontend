@@ -86,7 +86,7 @@ function MainPage() {
           Добавить новый пост
         </Button>
       )}
-      {posts &&
+      {posts?.length > 0 ? (
         posts
           .sort((a, b) => b.id - a.id)
           .map(post => {
@@ -140,7 +140,10 @@ function MainPage() {
                 </div>
               </div>
             );
-          })}
+          })
+      ) : (
+        <div>Нет постов</div>
+      )}
       <ToastContainer />
     </div>
   );

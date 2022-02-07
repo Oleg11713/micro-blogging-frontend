@@ -1,14 +1,9 @@
 import { actionTypes } from './types';
-import { fetchAllPosts } from '../../http/postAPI';
 
 const INITIAL_STATE = {
   posts: null,
   currentPost: null,
 };
-
-fetchAllPosts().then(data => {
-  INITIAL_STATE.posts = data;
-});
 
 export const postReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {

@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { selectCurrentUser } from '../../redux/user/selectors';
 import { setCurrentUser } from '../../redux/user/actions';
-import { authLinks, publicLinks } from './links';
+import { authLinksTitles, publicLinksTitles } from './linksForTitles';
+import { authLinksIcons, publicLinksIcons } from './linksForIcons';
 import { resetToken } from '../../http/userAPI';
 
 import './styles.scss';
@@ -17,16 +18,29 @@ function Header() {
   return (
     <div className="header">
       <div className="header-container">
-        <div className="navigation">
-          {publicLinks.map(({ path, title }) => (
+        <div className="navigation-for-large-width">
+          {publicLinksTitles.map(({ path, title }) => (
             <Link className="nav-link" key={path} to={path}>
               {title}
             </Link>
           ))}
           {currentUser &&
-            authLinks.map(({ path, title }) => (
+            authLinksTitles.map(({ path, title }) => (
               <Link className="nav-link" key={path} to={path}>
                 {title}
+              </Link>
+            ))}
+        </div>
+        <div className="navigation-for-small-width">
+          {publicLinksIcons.map(({ path, Icon }) => (
+            <Link className="nav-link" key={path} to={path}>
+              <Icon />
+            </Link>
+          ))}
+          {currentUser &&
+            authLinksIcons.map(({ path, Icon }) => (
+              <Link className="nav-link" key={path} to={path}>
+                <Icon />
               </Link>
             ))}
         </div>

@@ -36,8 +36,8 @@ function Login() {
         const user = await login(values.email, values.password);
         dispatch(setCurrentUser(user));
         history.push('/');
-      } catch {
-        toast.error('Не удалось войти', {
+      } catch (e) {
+        toast.error(`${e.response.data.message}`, {
           className: 'toast-error',
           draggable: false,
           position: toast.POSITION.BOTTOM_CENTER,

@@ -43,12 +43,14 @@
     margin-top: 50px;
 
     .posts {
+      width: 50%;
       padding-right: 50px;
       border-right: 1px solid #575556;
 
     }
 
     .comments {
+      width: 50%;
       align-items: start;
       margin-left: 50px;
     }
@@ -57,11 +59,13 @@
       flex-direction: column;
 
       .posts {
+        width: 100%;
         padding-right: 0;
         border: none;
       }
 
       .comments {
+        width: 100%;
         margin-left: 0;
         margin-top: 50px;
       }

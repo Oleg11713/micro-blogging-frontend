@@ -9,7 +9,7 @@ import {
   USERS_TITLE,
 } from '../../utils/constsTitles';
 
-export const publicLinks = [
+export const publicLinksTitles = [
   {
     path: MAIN_PAGE_ROUTE,
     title: MAIN_PAGE_TITLE,
@@ -20,7 +20,7 @@ export const publicLinks = [
   },
 ];
 
-export const authLinks = [
+export const authLinksTitles = [
   {
     path: MY_PROFILE_ROUTE,
     title: MY_PROFILE_TITLE,

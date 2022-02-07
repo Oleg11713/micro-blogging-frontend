@@ -18,6 +18,9 @@ import { ConfirmationDelete } from '../confirmationDelete';
 
 function Posts({ user }) {
   const posts = useSelector(selectPosts);
+  const sortedAndFilteredPosts =
+    posts &&
+    posts.sort((a, b) => a.id - b.id).filter(post => post.userId === user.id);
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -72,10 +75,8 @@ function Posts({ user }) {
           postId={selectedPost.id}
         />
       )}
-      {posts
-        .sort((a, b) => a.id - b.id)
-        .filter(post => post.userId === user.id)
-        .map(post => {
+      {sortedAndFilteredPosts.length > 0 ? (
+        sortedAndFilteredPosts.map(post => {
           return (
             <div key={post.id} className="post">
               {currentUser?.id === user?.id && (
@@ -135,7 +136,10 @@ function Posts({ user }) {
               </div>
             </div>
           );
-        })}
+        })
+      ) : (
+        <div className="no-posts">Нет постов</div>
+      )}
     </div>
   );
 }

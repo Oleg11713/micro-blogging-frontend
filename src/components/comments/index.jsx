@@ -16,6 +16,13 @@ import { ConfirmationDelete } from '../confirmationDelete';
 
 function Comments({ post, user }) {
   const comments = useSelector(selectComments);
+  const sortedAndFilteredComments =
+    comments &&
+    comments
+      .sort((a, b) => a.id - b.id)
+      .filter(comment => {
+        return post ? comment.postId === post.id : comment.userId === user.id;
+      });
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   const [showEditForm, setShowEditForm] = useState(false);
@@ -68,12 +75,8 @@ function Comments({ post, user }) {
           commentId={selectedComment.id}
         />
       )}
-      {comments
-        .sort((a, b) => a.id - b.id)
-        .filter(comment => {
-          return post ? comment.postId === post.id : comment.userId === user.id;
-        })
-        .map(comment => {
+      {sortedAndFilteredComments.length > 0 ? (
+        sortedAndFilteredComments.map(comment => {
           return (
             <div key={comment.id} className="comment">
               {currentUser?.id === comment?.userId && (
@@ -118,7 +121,10 @@ function Comments({ post, user }) {
               </div>
             </div>
           );
-        })}
+        })
+      ) : (
+        <div className="no-comments">Нет комментариев</div>
+      )}
     </div>
   );
 }

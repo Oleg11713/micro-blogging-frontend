@@ -1,15 +1,10 @@
 import { actionTypes } from './types';
-import { fetchAllUsers } from '../../http/userAPI';
 
 const INITIAL_STATE = {
   users: null,
   currentUser: null,
   viewedUser: null,
 };
-
-fetchAllUsers().then(data => {
-  INITIAL_STATE.users = data;
-});
 
 export const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {

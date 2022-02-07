@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 
-import { registration } from '../../http/userAPI';
+import { registration, resetToken } from '../../http/userAPI';
 
 import './styles.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Registration() {
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
 
   const validationSchema = yup.object({
     firstName: yup.string().required('Пожалуйста, заполните данное поле'),
@@ -63,12 +62,12 @@ function Registration() {
         } finally {
           setLoading(true);
         }
-        toast.success('Вы успешно зарегистрировались', {
+        toast.success('На ваш email отправлено подтверждение', {
           className: 'toast-success',
           position: toast.POSITION.BOTTOM_CENTER,
         });
         formik.resetForm();
-        history.push('/auth/login');
+        await resetToken();
       } catch (e) {
         toast.error(e.response.data.message, {
           className: 'toast-error',
