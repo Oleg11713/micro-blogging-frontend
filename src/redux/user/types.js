@@ -1,9 +1,0 @@
-const SET_CURRENT_USER = 'SET_CURRENT_USER';
-const SET_USERS = 'SET_USERS';
-const SET_VIEWED_USER = 'SET_VIEWED_USER';
-
-export const actionTypes = {
-  SET_CURRENT_USER,
-  SET_USERS,
-  SET_VIEWED_USER,
-};

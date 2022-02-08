@@ -28,13 +28,15 @@
     "prettier/prettier": [
       "error",
       {
-        "singleQuote": true,
+        "singleQuote": false,
         "trailingComma": "all",
         "arrowParens": "avoid",
         "endOfLine": "auto",
         "arrowParen": "avoid"
       }
     ],
+    "react/function-component-definition": "off",
+    "react/prefer-exact-props": "off",
     "no-use-before-define": "off",
     "import/extensions": [
       "error",
