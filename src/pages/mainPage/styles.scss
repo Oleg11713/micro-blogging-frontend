@@ -24,7 +24,7 @@
   }
 
   .post-container {
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
 
     .user-display-name{
@@ -60,6 +60,15 @@
         .content {
           display: flex;
           text-align: start;
+        }
+
+        .image {
+          margin-top: 20px;
+          width: 100%;
+
+          img {
+            width: 100%;
+          }
         }
       }
 

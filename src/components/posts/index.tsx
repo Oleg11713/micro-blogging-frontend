@@ -135,6 +135,14 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
               <div className="info">
                 <div className="title">{post.title}</div>
                 <div className="content">{post.content}</div>
+                {post.img && (
+                  <div className="image">
+                    <img
+                      src={process.env.REACT_APP_API_URL + post.img}
+                      alt="post"
+                    />
+                  </div>
+                )}
               </div>
               <div className="comment-icon">
                 <IconButton

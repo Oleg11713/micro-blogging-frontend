@@ -133,6 +133,14 @@ function MainPage() {
                   <div className="info">
                     <div className="title">{post.title}</div>
                     <div className="content">{post.content}</div>
+                    {post.img && (
+                      <div className="image">
+                        <img
+                          src={process.env.REACT_APP_API_URL + post.img}
+                          alt="post"
+                        />
+                      </div>
+                    )}
                   </div>
                   <IconButton
                     className="comment-icon"

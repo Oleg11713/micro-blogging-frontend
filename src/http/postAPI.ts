@@ -1,5 +1,4 @@
 import { authHost, host } from "./index";
-import { IPost } from "../interfaces/IPost";
 
 export const fetchAllPosts = async () => {
   const { data } = await host.get("api/post/viewAllPosts");
@@ -11,12 +10,12 @@ export const fetchOnePost = async (id: string | undefined) => {
   return data;
 };
 
-export const createPost = async (post: IPost) => {
+export const createPost = async (post: FormData) => {
   const { data } = await authHost.post("api/post/createPost", post);
   return data;
 };
 
-export const updatePost = async (updatedPost: IPost) => {
+export const updatePost = async (updatedPost: FormData) => {
   const { data } = await authHost.patch(`/api/post/updatePost`, updatedPost);
   return data;
 };

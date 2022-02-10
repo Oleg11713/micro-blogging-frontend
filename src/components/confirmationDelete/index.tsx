@@ -30,14 +30,15 @@ export const ConfirmationDelete: React.FC<IConfirmationDeleteProps> = ({
     try {
       if (commentId) await deleteComment(commentId);
       else {
-        comments
-          .filter(
-            (comment: { postId: number | undefined }) =>
-              comment.postId === postId,
-          )
-          .map(async (comment: { id: number }) => {
-            await deleteComment(comment.id);
-          });
+        if (comments)
+          comments
+            .filter(
+              (comment: { postId: number | undefined }) =>
+                comment.postId === postId,
+            )
+            .map(async (comment: { id: number }) => {
+              await deleteComment(comment.id);
+            });
         await deletePost(postId);
       }
     } finally {

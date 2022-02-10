@@ -118,6 +118,14 @@ function PostPage() {
         <div className="info">
           <div className="title">{currentPost.title}</div>
           <div className="content">{currentPost.content}</div>
+          {currentPost.img && (
+            <div className="image">
+              <img
+                src={process.env.REACT_APP_API_URL + currentPost.img}
+                alt="post"
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="comments">

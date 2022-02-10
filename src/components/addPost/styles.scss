@@ -41,6 +41,23 @@
   color: transparent;
 }
 
+.text-area {
+  margin-bottom: 20px;
+}
+
+.drop-area {
+  border: 2px dashed black;
+  padding: 60px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-post {
+  margin-bottom: 0;
+  margin-top: 30px;
+}
+
 .overlay {
   position: fixed;
   left: 0;

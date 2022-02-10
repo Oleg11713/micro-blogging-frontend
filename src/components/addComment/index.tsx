@@ -43,7 +43,7 @@ export const AddCommentForm: React.FC<IAddCommentFormProps> = ({
 
   return (
     <>
-      <form className="add-comment-form">
+      <form className="add-comment-form" onSubmit={handleCreateComment}>
         <div className="tools">
           <IconButton
             className="cancel-icon"
@@ -68,11 +68,7 @@ export const AddCommentForm: React.FC<IAddCommentFormProps> = ({
           />
         </div>
         <div>
-          <Button
-            className="add-post-button"
-            variant="contained"
-            onClick={handleCreateComment}
-          >
+          <Button className="add-post-button" variant="contained" type="submit">
             Добавить комментарий
           </Button>
         </div>

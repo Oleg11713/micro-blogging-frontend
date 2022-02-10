@@ -40,7 +40,7 @@ export const EditCommentForm: React.FC<IEditCommentFormProps> = ({
 
   return (
     <>
-      <form className="update-comment-form">
+      <form className="update-comment-form" onSubmit={handleUpdateComment}>
         <div className="tools">
           <IconButton
             className="cancel-icon"
@@ -68,7 +68,7 @@ export const EditCommentForm: React.FC<IEditCommentFormProps> = ({
           <Button
             className="update-comment-button"
             variant="contained"
-            onClick={handleUpdateComment}
+            type="submit"
           >
             Изменить комментарий
           </Button>

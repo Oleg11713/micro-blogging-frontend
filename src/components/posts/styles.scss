@@ -28,6 +28,15 @@
         display: flex;
         text-align: start;
       }
+
+      .image {
+        margin-top: 20px;
+        width: 100%;
+
+        img {
+          width: 100%;
+        }
+      }
     }
 
     .comment-icon {

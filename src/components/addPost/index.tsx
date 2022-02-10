@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Button, IconButton } from "@material-ui/core";
+import { Button, Fab, IconButton } from "@material-ui/core";
 import CancelIcon from "@mui/icons-material/Cancel";
+import AddIcon from "@mui/icons-material/Add";
 
 import { selectCurrentUser } from "../../redux/user/selectors";
 import { createPost } from "../../http/postAPI";
-import { IPost } from "../../interfaces/IPost";
 
 import "./styles.scss";
 
@@ -21,6 +21,7 @@ export const AddPostForm: React.FC<IAddPostFormProps> = ({
   const [content, setContent] = useState("");
   const history = useHistory();
   const currentUser = useSelector(selectCurrentUser);
+  const [file, setFile] = useState("");
 
   const handleTitleChange = (e: any) => {
     setTitle(e.target.value);
@@ -32,21 +33,27 @@ export const AddPostForm: React.FC<IAddPostFormProps> = ({
 
   const handleCreatePost = async () => {
     try {
-      const post: IPost = {
-        title,
-        content,
-        userId: currentUser.id,
-      };
-      await createPost(post);
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      formData.append("img", file);
+      formData.append("userId", currentUser.id);
+      await createPost(formData);
     } finally {
       handleAddFormHide();
       history.go(0);
     }
   };
 
+  const handleUploadFile = async (e: any) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    setFile(file);
+  };
+
   return (
     <>
-      <form className="add-post-form">
+      <form className="add-post-form" onSubmit={handleCreatePost}>
         <div className="tools">
           <IconButton
             className="cancel-icon"
@@ -69,7 +76,7 @@ export const AddPostForm: React.FC<IAddPostFormProps> = ({
             required
           />
         </div>
-        <div>
+        <div className="text-area">
           <textarea
             className="form-input"
             name="postContent"
@@ -81,12 +88,26 @@ export const AddPostForm: React.FC<IAddPostFormProps> = ({
             required
           />
         </div>
-        <div>
-          <Button
-            className="add-post-button"
-            variant="contained"
-            onClick={handleCreatePost}
+        <label htmlFor="upload-photo">
+          <input
+            style={{ display: "none" }}
+            id="upload-photo"
+            name="upload-photo"
+            type="file"
+            onChange={handleUploadFile}
+          />
+          <Fab
+            color="primary"
+            size="small"
+            component="span"
+            aria-label="add"
+            variant="extended"
           >
+            <AddIcon /> Прикрепить картинку
+          </Fab>
+        </label>
+        <div className="add-post">
+          <Button variant="contained" type="submit">
             Добавить пост
           </Button>
         </div>
