@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { Spinner } from "react-bootstrap";
 import { Button, IconButton } from "@material-ui/core";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AliceCarousel from "react-alice-carousel";
 
 import { ConfirmationDelete } from "../../components/confirmationDelete";
 import { AddPostForm } from "../../components/addPost";
@@ -19,6 +19,7 @@ import { IPost } from "../../interfaces/IPost";
 import { IUser } from "../../interfaces/IUser";
 
 import "./styles.scss";
+import "react-alice-carousel/lib/alice-carousel.css";
 
 function MainPage() {
   const users = useSelector(selectUsers);
@@ -33,31 +34,17 @@ function MainPage() {
     id: 0,
     title: "",
     userId: 0,
+    images: {},
   });
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAllPosts()
-      .then(data => {
-        setLoading(true);
-        dispatch(setPosts(data));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-    fetchAllUsers()
-      .then(data => {
-        setLoading(true);
-        dispatch(setUsers(data));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [dispatch]);
-
-  if (loading) {
-    return <Spinner animation="grow" />;
-  }
+    fetchAllPosts().then(data => {
+      dispatch(setPosts(data));
+    });
+    fetchAllUsers().then(data => {
+      dispatch(setUsers(data));
+    });
+  }, []);
 
   const handleAddFormHide = () => {
     setShowAddForm(false);
@@ -133,13 +120,34 @@ function MainPage() {
                   <div className="info">
                     <div className="title">{post.title}</div>
                     <div className="content">{post.content}</div>
-                    {post.img && (
-                      <div className="image">
-                        <img
-                          src={process.env.REACT_APP_API_URL + post.img}
-                          alt="post"
-                        />
-                      </div>
+                    {Object.values(post.images).length > 1 ? (
+                      <AliceCarousel>
+                        {Object.values(post.images).map((image: any) => {
+                          const path = process.env.REACT_APP_API_URL + image;
+                          return (
+                            <img
+                              key={image}
+                              className="sliderimg"
+                              style={{ width: "100%" }}
+                              src={path}
+                              alt="post"
+                            />
+                          );
+                        })}
+                      </AliceCarousel>
+                    ) : (
+                      Object.values(post.images).map((image: any) => {
+                        const path = process.env.REACT_APP_API_URL + image;
+                        return (
+                          <img
+                            key={image}
+                            className="sliderimg"
+                            style={{ width: "100%" }}
+                            src={path}
+                            alt="post"
+                          />
+                        );
+                      })
                     )}
                   </div>
                   <IconButton

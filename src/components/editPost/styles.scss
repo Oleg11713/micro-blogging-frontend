@@ -34,7 +34,7 @@
   width: 100%;
   padding: 4px 5px;
   border-radius: 8px;
-  border: 1px solid rgb(138, 136, 136)
+  border: 1px solid rgb(138, 136, 136);
 }
 
 .form-input:focus::placeholder {
@@ -43,6 +43,22 @@
 
 .text-area {
   margin-bottom: 20px;
+}
+
+.images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .image {
+    max-width: 190px;
+    flex: auto;
+    padding: 0 5px;
+
+    img {
+      width: 100%;
+    }
+  }
 }
 
 .update-post {

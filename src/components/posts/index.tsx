@@ -6,6 +6,7 @@ import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import AliceCarousel from "react-alice-carousel";
 
 import { selectCurrentUser } from "../../redux/user/selectors";
 import { selectPosts } from "../../redux/post/selectors";
@@ -13,10 +14,11 @@ import { setPosts } from "../../redux/post/actions";
 import { fetchAllPosts } from "../../http/postAPI";
 import { EditPostForm } from "../editPost";
 import { ConfirmationDelete } from "../confirmationDelete";
-
-import "./styles.scss";
 import { IUser } from "../../interfaces/IUser";
 import { IPost } from "../../interfaces/IPost";
+
+import "./styles.scss";
+import "react-alice-carousel/lib/alice-carousel.css";
 
 interface IPostsProps {
   user: IUser;
@@ -39,6 +41,7 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
     id: 0,
     title: "",
     userId: 0,
+    images: {},
   });
   const [loading, setLoading] = useState(true);
 
@@ -80,6 +83,7 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
           postId={selectedPost.id}
           initialTitle={selectedPost.title}
           initialContent={selectedPost.content}
+          initialImages={selectedPost.images}
         />
       )}
       {showDeleteForm && (
@@ -135,13 +139,34 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
               <div className="info">
                 <div className="title">{post.title}</div>
                 <div className="content">{post.content}</div>
-                {post.img && (
-                  <div className="image">
-                    <img
-                      src={process.env.REACT_APP_API_URL + post.img}
-                      alt="post"
-                    />
-                  </div>
+                {Object.values(post.images).length > 1 ? (
+                  <AliceCarousel>
+                    {Object.values(post.images).map((image: any) => {
+                      const path = process.env.REACT_APP_API_URL + image;
+                      return (
+                        <img
+                          key={image}
+                          className="sliderimg"
+                          style={{ width: "100%" }}
+                          src={path}
+                          alt="post"
+                        />
+                      );
+                    })}
+                  </AliceCarousel>
+                ) : (
+                  Object.values(post.images).map((image: any) => {
+                    const path = process.env.REACT_APP_API_URL + image;
+                    return (
+                      <img
+                        key={image}
+                        className="sliderimg"
+                        style={{ width: "100%" }}
+                        src={path}
+                        alt="post"
+                      />
+                    );
+                  })
                 )}
               </div>
               <div className="comment-icon">

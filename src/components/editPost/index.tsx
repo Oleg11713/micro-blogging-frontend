@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Button, Fab, IconButton } from "@material-ui/core";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AddIcon from "@mui/icons-material/Add";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import { updatePost } from "../../http/postAPI";
 
@@ -11,6 +12,7 @@ import "./styles.scss";
 interface IEditPostForm {
   initialTitle: string;
   initialContent: string;
+  initialImages: Object;
   postId: number;
   handleEditFormHide(): void;
 }
@@ -19,11 +21,16 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
   handleEditFormHide,
   initialTitle,
   initialContent,
+  initialImages,
   postId,
 }) => {
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
-  const [file, setFile] = useState("");
+  const [uploadedImages, setUploadedImages] = useState(
+    Object.values(initialImages),
+  );
+  const [newImages, setNewImages] = useState<any[]>([]);
+
   const history = useHistory();
 
   const handleTitleChange = (e: any) => {
@@ -40,7 +47,8 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
       formData.append("id", postId.toString());
       formData.append("title", title);
       formData.append("content", content);
-      formData.append("img", file);
+      uploadedImages.map(image => formData.append("uploadedImages", image));
+      newImages.map(image => formData.append("newImages", image));
       await updatePost(formData);
     } finally {
       handleEditFormHide();
@@ -50,8 +58,18 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
 
   const handleUploadFile = async (e: any) => {
     e.preventDefault();
-    const file = e.target.files[0];
-    setFile(file);
+    newImages.push(e.target.files[0]);
+    setNewImages([...newImages]);
+  };
+
+  const handleRemoveUploadedImage = (selectedImage: Object) => {
+    uploadedImages.splice(uploadedImages.indexOf(selectedImage), 1);
+    setUploadedImages([...uploadedImages]);
+  };
+
+  const handleRemoveNewImage = (selectedImage: Object) => {
+    newImages.splice(newImages.indexOf(selectedImage), 1);
+    setNewImages([...newImages]);
   };
 
   return (
@@ -91,6 +109,47 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
             required
           />
         </div>
+        <div>Загруженные картинки</div>
+        {uploadedImages.length !== 0 ? (
+          uploadedImages.map(image => {
+            return (
+              <div key={image} className="image">
+                <div className="image-name">{image}</div>
+                <IconButton
+                  className="clear-icon"
+                  aria-label="clear"
+                  size="small"
+                  onClick={() => {
+                    handleRemoveUploadedImage(image);
+                  }}
+                >
+                  <ClearIcon />
+                </IconButton>
+              </div>
+            );
+          })
+        ) : (
+          <div>Нет исходных картинок</div>
+        )}
+        <div>Новые картинки</div>
+        {newImages &&
+          newImages.map(image => {
+            return (
+              <div key={image.name} className="image">
+                <div className="image-name">{image.name}</div>
+                <IconButton
+                  className="clear-icon"
+                  aria-label="clear"
+                  size="small"
+                  onClick={() => {
+                    handleRemoveNewImage(image);
+                  }}
+                >
+                  <ClearIcon />
+                </IconButton>
+              </div>
+            );
+          })}
         <label htmlFor="upload-photo">
           <input
             style={{ display: "none" }}

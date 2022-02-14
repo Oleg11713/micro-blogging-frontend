@@ -27,7 +27,7 @@
     max-width: 600px;
     width: 100%;
 
-    .user-display-name{
+    .user-display-name {
       display: flex;
       justify-content: flex-start;
       border-top: 1px solid #575556;
@@ -36,7 +36,6 @@
     }
 
     .post {
-
       .tools {
         display: flex;
         justify-content: flex-end;
@@ -49,7 +48,7 @@
       .info {
         padding: 10px;
         margin-top: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
         .title {
           font-weight: bold;
@@ -62,13 +61,9 @@
           text-align: start;
         }
 
-        .image {
+        .sliderimg {
           margin-top: 20px;
           width: 100%;
-
-          img {
-            width: 100%;
-          }
         }
       }
 

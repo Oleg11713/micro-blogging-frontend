@@ -5,6 +5,7 @@ import { Spinner } from "react-bootstrap";
 import { Button, IconButton } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import AliceCarousel from "react-alice-carousel";
 
 import { selectCurrentUser } from "../../redux/user/selectors";
 import { selectCurrentPost } from "../../redux/post/selectors";
@@ -16,6 +17,7 @@ import { ConfirmationDelete } from "../../components/confirmationDelete";
 import { Comments } from "../../components/comments";
 
 import "./styles.scss";
+import "react-alice-carousel/lib/alice-carousel.css";
 
 function PostPage() {
   const currentPost = useSelector(selectCurrentPost);
@@ -73,6 +75,7 @@ function PostPage() {
           postId={currentPost.id}
           initialTitle={currentPost.title}
           initialContent={currentPost.content}
+          initialImages={currentPost.images}
         />
       )}
       {showDeleteForm && (
@@ -118,13 +121,34 @@ function PostPage() {
         <div className="info">
           <div className="title">{currentPost.title}</div>
           <div className="content">{currentPost.content}</div>
-          {currentPost.img && (
-            <div className="image">
-              <img
-                src={process.env.REACT_APP_API_URL + currentPost.img}
-                alt="post"
-              />
-            </div>
+          {Object.values(currentPost.images).length > 1 ? (
+            <AliceCarousel>
+              {Object.values(currentPost.images).map((image: any) => {
+                const path = process.env.REACT_APP_API_URL + image;
+                return (
+                  <img
+                    key={image}
+                    className="sliderimg"
+                    style={{ width: "100%" }}
+                    src={path}
+                    alt="post"
+                  />
+                );
+              })}
+            </AliceCarousel>
+          ) : (
+            Object.values(currentPost.images).map((image: any) => {
+              const path = process.env.REACT_APP_API_URL + image;
+              return (
+                <img
+                  key={image}
+                  className="sliderimg"
+                  style={{ width: "100%" }}
+                  src={path}
+                  alt="post"
+                />
+              );
+            })
           )}
         </div>
       </div>
