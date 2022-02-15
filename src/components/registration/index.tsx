@@ -25,9 +25,8 @@ function Registration() {
     passwordConfirm: yup.string().required("Пожалуйста, заполните данное поле"),
   });
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-
     formik.handleSubmit();
   };
 

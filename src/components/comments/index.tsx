@@ -14,6 +14,7 @@ import { ConfirmationDelete } from "../confirmationDelete";
 import { IUser } from "../../interfaces/IUser";
 import { IPost } from "../../interfaces/IPost";
 import { IComment } from "../../interfaces/IComment";
+import { ADMIN } from "../../utils/constsRoles";
 
 import "./styles.scss";
 
@@ -28,7 +29,7 @@ export const Comments: React.FC<ICommentsProps> = ({ post, user }) => {
     comments &&
     comments
       .sort((a: { id: number }, b: { id: number }) => a.id - b.id)
-      .filter((comment: { postId: any; userId: any }) => {
+      .filter((comment: { postId: number; userId: number }) => {
         return post
           ? comment.postId === post.id
           : user && comment.userId === user.id;
@@ -119,7 +120,7 @@ export const Comments: React.FC<ICommentsProps> = ({ post, user }) => {
                   </IconButton>
                 </div>
               )}
-              {currentUser?.role === "ADMIN" &&
+              {currentUser?.role === ADMIN &&
                 currentUser?.id !== comment.userId && (
                   <div className="tools">
                     <IconButton

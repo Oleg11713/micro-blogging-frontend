@@ -22,7 +22,7 @@ function App() {
     authCheck()
       .then(user => dispatch(setCurrentUser(user)))
       .catch(e => {
-        toast.warning(`${e.response.data.message}`, {
+        toast.warning(e.response.data.message, {
           className: "toast-error",
           position: toast.POSITION.BOTTOM_CENTER,
         });

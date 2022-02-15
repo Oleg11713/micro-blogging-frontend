@@ -16,6 +16,7 @@ import { EditPostForm } from "../editPost";
 import { ConfirmationDelete } from "../confirmationDelete";
 import { IUser } from "../../interfaces/IUser";
 import { IPost } from "../../interfaces/IPost";
+import { ADMIN } from "../../utils/constsRoles";
 
 import "./styles.scss";
 import "react-alice-carousel/lib/alice-carousel.css";
@@ -121,7 +122,7 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
                   </IconButton>
                 </div>
               )}
-              {currentUser?.role === "ADMIN" && currentUser?.id !== user?.id && (
+              {currentUser?.role === ADMIN && currentUser?.id !== user?.id && (
                 <div className="tools">
                   <IconButton
                     className="delete-icon"
@@ -141,7 +142,7 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
                 <div className="content">{post.content}</div>
                 {Object.values(post.images).length > 1 ? (
                   <AliceCarousel>
-                    {Object.values(post.images).map((image: any) => {
+                    {Object.values(post.images).map((image: string) => {
                       const path = process.env.REACT_APP_API_URL + image;
                       return (
                         <img
@@ -155,7 +156,7 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
                     })}
                   </AliceCarousel>
                 ) : (
-                  Object.values(post.images).map((image: any) => {
+                  Object.values(post.images).map((image: string) => {
                     const path = process.env.REACT_APP_API_URL + image;
                     return (
                       <img

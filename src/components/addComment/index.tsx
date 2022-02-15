@@ -23,7 +23,7 @@ export const AddCommentForm: React.FC<IAddCommentFormProps> = ({
   const history = useHistory();
   const currentUser = useSelector(selectCurrentUser);
 
-  const handleContentChange = (e: any) => {
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
@@ -44,33 +44,39 @@ export const AddCommentForm: React.FC<IAddCommentFormProps> = ({
   return (
     <>
       <form className="add-comment-form" onSubmit={handleCreateComment}>
-        <div className="tools">
-          <IconButton
-            className="cancel-icon"
-            aria-label="cancel"
-            size="small"
-            onClick={handleAddFormHide}
-          >
-            <CancelIcon />
-          </IconButton>
-        </div>
-        <h2 className="heading">Добавление комментария</h2>
-        <div>
-          <textarea
-            className="form-input"
-            name="postContent"
-            placeholder="Комментарий"
-            value={content}
-            maxLength={250}
-            rows={5}
-            onChange={handleContentChange}
-            required
-          />
-        </div>
-        <div>
-          <Button className="add-post-button" variant="contained" type="submit">
-            Добавить комментарий
-          </Button>
+        <div className="form-wrapper">
+          <div className="tools">
+            <IconButton
+              className="cancel-icon"
+              aria-label="cancel"
+              size="small"
+              onClick={handleAddFormHide}
+            >
+              <CancelIcon />
+            </IconButton>
+          </div>
+          <h2 className="heading">Добавление комментария</h2>
+          <div>
+            <textarea
+              className="form-input"
+              name="postContent"
+              placeholder="Комментарий"
+              value={content}
+              maxLength={250}
+              rows={5}
+              onChange={handleContentChange}
+              required
+            />
+          </div>
+          <div>
+            <Button
+              className="add-post-button"
+              variant="contained"
+              type="submit"
+            >
+              Добавить комментарий
+            </Button>
+          </div>
         </div>
       </form>
       <div className="overlay" />

@@ -15,9 +15,10 @@ import { AddCommentForm } from "../../components/addComment";
 import { EditPostForm } from "../../components/editPost";
 import { ConfirmationDelete } from "../../components/confirmationDelete";
 import { Comments } from "../../components/comments";
+import { ADMIN } from "../../utils/constsRoles";
 
 import "./styles.scss";
-import "react-alice-carousel/lib/alice-carousel.css";
+import "./alice-carousel.scss";
 
 function PostPage() {
   const currentPost = useSelector(selectCurrentPost);
@@ -105,7 +106,7 @@ function PostPage() {
             </IconButton>
           </div>
         )}
-        {currentUser?.role === "ADMIN" &&
+        {currentUser?.role === ADMIN &&
           currentUser?.id !== currentPost?.userId && (
             <div className="tools">
               <IconButton
@@ -123,13 +124,12 @@ function PostPage() {
           <div className="content">{currentPost.content}</div>
           {Object.values(currentPost.images).length > 1 ? (
             <AliceCarousel>
-              {Object.values(currentPost.images).map((image: any) => {
+              {Object.values(currentPost.images).map((image: string) => {
                 const path = process.env.REACT_APP_API_URL + image;
                 return (
                   <img
                     key={image}
                     className="sliderimg"
-                    style={{ width: "100%" }}
                     src={path}
                     alt="post"
                   />
@@ -137,7 +137,7 @@ function PostPage() {
               })}
             </AliceCarousel>
           ) : (
-            Object.values(currentPost.images).map((image: any) => {
+            Object.values(currentPost.images).map((image: string) => {
               const path = process.env.REACT_APP_API_URL + image;
               return (
                 <img

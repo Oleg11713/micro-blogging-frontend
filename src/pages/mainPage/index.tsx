@@ -17,6 +17,7 @@ import { fetchAllPosts } from "../../http/postAPI";
 import { fetchAllUsers } from "../../http/userAPI";
 import { IPost } from "../../interfaces/IPost";
 import { IUser } from "../../interfaces/IUser";
+import { ADMIN } from "../../utils/constsRoles";
 
 import "./styles.scss";
 import "react-alice-carousel/lib/alice-carousel.css";
@@ -87,7 +88,7 @@ function MainPage() {
             return (
               <div key={post.id} className="post-container">
                 {users &&
-                  users
+                  Object.values(users)
                     .filter((user: IUser) => post.userId === user.id)
                     .map((user: IUser) => {
                       return (
@@ -101,7 +102,7 @@ function MainPage() {
                       );
                     })}
                 <div className="post">
-                  {(currentUser?.role === "ADMIN" ||
+                  {(currentUser?.role === ADMIN ||
                     currentUser?.id === post.userId) && (
                     <div className="tools">
                       <IconButton
@@ -122,7 +123,7 @@ function MainPage() {
                     <div className="content">{post.content}</div>
                     {Object.values(post.images).length > 1 ? (
                       <AliceCarousel>
-                        {Object.values(post.images).map((image: any) => {
+                        {Object.values(post.images).map((image: string) => {
                           const path = process.env.REACT_APP_API_URL + image;
                           return (
                             <img
@@ -136,7 +137,7 @@ function MainPage() {
                         })}
                       </AliceCarousel>
                     ) : (
-                      Object.values(post.images).map((image: any) => {
+                      Object.values(post.images).map((image: string) => {
                         const path = process.env.REACT_APP_API_URL + image;
                         return (
                           <img

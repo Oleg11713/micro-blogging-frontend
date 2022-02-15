@@ -1,12 +1,12 @@
 import { actionTypes } from "./types";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: Object = {
   comments: null,
 };
 
 export const commentReducer = (
   state = INITIAL_STATE,
-  action: { type: any; payload: any },
+  action: { type: string; payload: [] },
 ) => {
   switch (action.type) {
     case actionTypes.SET_COMMENTS:

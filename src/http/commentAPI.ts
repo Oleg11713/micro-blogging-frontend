@@ -11,7 +11,10 @@ export const createComment = async (comment: IComment) => {
   return data;
 };
 
-export const updateComment = async (updatedComment: IComment) => {
+export const updateComment = async (updatedComment: {
+  id?: number;
+  content: string;
+}) => {
   const { data } = await authHost.patch(
     `/api/comment/updateComment`,
     updatedComment,

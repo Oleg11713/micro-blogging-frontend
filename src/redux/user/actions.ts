@@ -6,7 +6,7 @@ export const setCurrentUser = (currentUser: IUser) => ({
   payload: currentUser,
 });
 
-export const setUsers = (users: IUser) => ({
+export const setUsers = (users: []) => ({
   type: actionTypes.SET_USERS,
   payload: users,
 });

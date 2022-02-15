@@ -1,7 +1,7 @@
 import { actionTypes } from "./types";
 import { IUser } from "../../interfaces/IUser";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: Object = {
   users: null,
   currentUser: null,
   viewedUser: null,
@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 
 export const userReducer = (
   state = INITIAL_STATE,
-  action: { type: string; payload: IUser },
+  action: { type: string; payload: [] | IUser },
 ) => {
   switch (action.type) {
     case actionTypes.SET_CURRENT_USER:

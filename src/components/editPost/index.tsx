@@ -29,15 +29,15 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
   const [uploadedImages, setUploadedImages] = useState(
     Object.values(initialImages),
   );
-  const [newImages, setNewImages] = useState<any[]>([]);
+  const [newImages, setNewImages] = useState<File[]>([]);
 
   const history = useHistory();
 
-  const handleTitleChange = (e: any) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  const handleContentChange = (e: any) => {
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
@@ -56,18 +56,22 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
     }
   };
 
-  const handleUploadFile = async (e: any) => {
+  const handleUploadFile = async (
+    e: React.ChangeEvent<HTMLInputElement> & React.ChangeEvent<EventTarget>,
+  ) => {
     e.preventDefault();
-    newImages.push(e.target.files[0]);
+    if (e.target.files) {
+      newImages.push(e.target.files[0]);
+    }
     setNewImages([...newImages]);
   };
 
-  const handleRemoveUploadedImage = (selectedImage: Object) => {
+  const handleRemoveUploadedImage = (selectedImage: string) => {
     uploadedImages.splice(uploadedImages.indexOf(selectedImage), 1);
     setUploadedImages([...uploadedImages]);
   };
 
-  const handleRemoveNewImage = (selectedImage: Object) => {
+  const handleRemoveNewImage = (selectedImage: File) => {
     newImages.splice(newImages.indexOf(selectedImage), 1);
     setNewImages([...newImages]);
   };
@@ -75,103 +79,105 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
   return (
     <>
       <form className="update-post-form" onSubmit={handleUpdatePost}>
-        <div className="tools">
-          <IconButton
-            className="cancel-icon"
-            aria-label="cancel"
-            size="small"
-            onClick={handleEditFormHide}
-          >
-            <CancelIcon />
-          </IconButton>
-        </div>
-        <h2 className="heading">Редактирование поста</h2>
-        <div>
-          <input
-            className="form-input"
-            type="text"
-            name="postTitle"
-            placeholder="Заголовок"
-            value={title}
-            onChange={handleTitleChange}
-            required
-          />
-        </div>
-        <div className="text-area">
-          <textarea
-            className="form-input"
-            name="postContent"
-            placeholder="Описание"
-            value={content}
-            maxLength={250}
-            rows={5}
-            onChange={handleContentChange}
-            required
-          />
-        </div>
-        <div>Загруженные картинки</div>
-        {uploadedImages.length !== 0 ? (
-          uploadedImages.map(image => {
-            return (
-              <div key={image} className="image">
-                <div className="image-name">{image}</div>
-                <IconButton
-                  className="clear-icon"
-                  aria-label="clear"
-                  size="small"
-                  onClick={() => {
-                    handleRemoveUploadedImage(image);
-                  }}
-                >
-                  <ClearIcon />
-                </IconButton>
-              </div>
-            );
-          })
-        ) : (
-          <div>Нет исходных картинок</div>
-        )}
-        <div>Новые картинки</div>
-        {newImages &&
-          newImages.map(image => {
-            return (
-              <div key={image.name} className="image">
-                <div className="image-name">{image.name}</div>
-                <IconButton
-                  className="clear-icon"
-                  aria-label="clear"
-                  size="small"
-                  onClick={() => {
-                    handleRemoveNewImage(image);
-                  }}
-                >
-                  <ClearIcon />
-                </IconButton>
-              </div>
-            );
-          })}
-        <label htmlFor="upload-photo">
-          <input
-            style={{ display: "none" }}
-            id="upload-photo"
-            name="upload-photo"
-            type="file"
-            onChange={handleUploadFile}
-          />
-          <Fab
-            color="primary"
-            size="small"
-            component="span"
-            aria-label="add"
-            variant="extended"
-          >
-            <AddIcon /> Прикрепить картинку
-          </Fab>
-        </label>
-        <div className="update-post">
-          <Button variant="contained" type="submit">
-            Изменить пост
-          </Button>
+        <div className="form-wrapper">
+          <div className="tools">
+            <IconButton
+              className="cancel-icon"
+              aria-label="cancel"
+              size="small"
+              onClick={handleEditFormHide}
+            >
+              <CancelIcon />
+            </IconButton>
+          </div>
+          <h2 className="heading">Редактирование поста</h2>
+          <div>
+            <input
+              className="form-input"
+              type="text"
+              name="postTitle"
+              placeholder="Заголовок"
+              value={title}
+              onChange={handleTitleChange}
+              required
+            />
+          </div>
+          <div className="text-area">
+            <textarea
+              className="form-input"
+              name="postContent"
+              placeholder="Описание"
+              value={content}
+              maxLength={250}
+              rows={5}
+              onChange={handleContentChange}
+              required
+            />
+          </div>
+          <div>Загруженные картинки</div>
+          {uploadedImages.length !== 0 ? (
+            uploadedImages.map(image => {
+              return (
+                <div key={image} className="image">
+                  <div className="image-name">{image}</div>
+                  <IconButton
+                    className="clear-icon"
+                    aria-label="clear"
+                    size="small"
+                    onClick={() => {
+                      handleRemoveUploadedImage(image);
+                    }}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+                </div>
+              );
+            })
+          ) : (
+            <div>Нет исходных картинок</div>
+          )}
+          <div>Новые картинки</div>
+          {newImages &&
+            newImages.map(image => {
+              return (
+                <div key={image.name} className="image">
+                  <div className="image-name">{image.name}</div>
+                  <IconButton
+                    className="clear-icon"
+                    aria-label="clear"
+                    size="small"
+                    onClick={() => {
+                      handleRemoveNewImage(image);
+                    }}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+                </div>
+              );
+            })}
+          <label htmlFor="upload-photo">
+            <input
+              style={{ display: "none" }}
+              id="upload-photo"
+              name="upload-photo"
+              type="file"
+              onChange={handleUploadFile}
+            />
+            <Fab
+              color="primary"
+              size="small"
+              component="span"
+              aria-label="add"
+              variant="extended"
+            >
+              <AddIcon /> Прикрепить картинку
+            </Fab>
+          </label>
+          <div className="update-post">
+            <Button variant="contained" type="submit">
+              Изменить пост
+            </Button>
+          </div>
         </div>
       </form>
       <div className="overlay" />

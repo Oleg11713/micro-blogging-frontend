@@ -1,15 +1,19 @@
+.form-wrapper {
+  padding: 20px;
+  margin: 15px;
+  background-color: white;
+  border-radius: 10px;
+}
+
 .update-comment-form {
   position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
-  background-color: white;
-  max-width: 400px;
+  max-width: 450px;
   width: 100%;
-  padding: 20px;
   text-align: center;
-  border-radius: 10px;
 }
 
 .cancel-icon {
@@ -34,7 +38,7 @@
   width: 100%;
   padding: 4px 5px;
   border-radius: 8px;
-  border: 1px solid rgb(138, 136, 136)
+  border: 1px solid rgb(138, 136, 136);
 }
 
 .form-input:focus::placeholder {

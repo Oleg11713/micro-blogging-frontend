@@ -8,7 +8,7 @@ import { updateComment } from "../../http/commentAPI";
 import "./styles.scss";
 
 interface IEditCommentFormProps {
-  initialContent?: string;
+  initialContent: string;
   commentId?: number;
   handleEditFormHide(): void;
 }
@@ -21,7 +21,7 @@ export const EditCommentForm: React.FC<IEditCommentFormProps> = ({
   const [content, setContent] = useState(initialContent);
   const history = useHistory();
 
-  const handleContentChange = (e: any) => {
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
@@ -41,37 +41,39 @@ export const EditCommentForm: React.FC<IEditCommentFormProps> = ({
   return (
     <>
       <form className="update-comment-form" onSubmit={handleUpdateComment}>
-        <div className="tools">
-          <IconButton
-            className="cancel-icon"
-            aria-label="cancel"
-            size="small"
-            onClick={handleEditFormHide}
-          >
-            <CancelIcon />
-          </IconButton>
-        </div>
-        <h2 className="heading">Редактирование комментария</h2>
-        <div>
-          <textarea
-            className="form-input"
-            name="commentContent"
-            placeholder="Описание"
-            value={content}
-            maxLength={250}
-            rows={5}
-            onChange={handleContentChange}
-            required
-          />
-        </div>
-        <div>
-          <Button
-            className="update-comment-button"
-            variant="contained"
-            type="submit"
-          >
-            Изменить комментарий
-          </Button>
+        <div className="form-wrapper">
+          <div className="tools">
+            <IconButton
+              className="cancel-icon"
+              aria-label="cancel"
+              size="small"
+              onClick={handleEditFormHide}
+            >
+              <CancelIcon />
+            </IconButton>
+          </div>
+          <h2 className="heading">Редактирование комментария</h2>
+          <div>
+            <textarea
+              className="form-input"
+              name="commentContent"
+              placeholder="Описание"
+              value={content}
+              maxLength={250}
+              rows={5}
+              onChange={handleContentChange}
+              required
+            />
+          </div>
+          <div>
+            <Button
+              className="update-comment-button"
+              variant="contained"
+              type="submit"
+            >
+              Изменить комментарий
+            </Button>
+          </div>
         </div>
       </form>
       <div className="overlay" />

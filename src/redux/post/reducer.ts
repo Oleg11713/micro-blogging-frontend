@@ -1,13 +1,14 @@
 import { actionTypes } from "./types";
+import { IPost } from "../../interfaces/IPost";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: Object = {
   posts: null,
   currentPost: null,
 };
 
 export const postReducer = (
   state = INITIAL_STATE,
-  action: { type: any; payload: any },
+  action: { type: string; payload: [] | IPost },
 ) => {
   switch (action.type) {
     case actionTypes.SET_POSTS:

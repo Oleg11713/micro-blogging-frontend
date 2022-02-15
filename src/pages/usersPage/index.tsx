@@ -8,6 +8,7 @@ import { fetchAllUsers } from "../../http/userAPI";
 import { selectCurrentUser, selectUsers } from "../../redux/user/selectors";
 import { setUsers } from "../../redux/user/actions";
 import { IUser } from "../../interfaces/IUser";
+import { ADMIN, USER } from "../../utils/constsRoles";
 
 import "./styles.scss";
 
@@ -32,17 +33,39 @@ function UsersPage() {
     return <Spinner animation="grow" />;
   }
 
+  const displayAge = (age: number) => {
+    let resultStringAge = "";
+    if (age < 10 || age > 20) {
+      if (
+        age.toString().split("")[age.toString().split("").length - 1] === "2" ||
+        age.toString().split("")[age.toString().split("").length - 1] === "3" ||
+        age.toString().split("")[age.toString().split("").length - 1] === "4"
+      ) {
+        resultStringAge = `${age} года`;
+      } else if (
+        age.toString().split("")[age.toString().split("").length - 1] === "1"
+      ) {
+        resultStringAge = `${age} год`;
+      } else {
+        resultStringAge = `${age} лет`;
+      }
+    } else {
+      resultStringAge = `${age} лет`;
+    }
+    return resultStringAge;
+  };
+
   return (
     <div className="users-page">
       <div className="heading-role">Администратор</div>
-      {users
-        .filter((user: IUser) => user.role === "ADMIN")
+      {Object.values(users)
+        .filter((user: IUser) => user.role === ADMIN)
         .map((user: IUser) => {
           return (
             <div key={user.id} className="user">
               <div className="personal-info">
                 <div className="display-name">{user.displayName}</div>
-                <div className="age">{user.age} лет</div>
+                <div className="age">{displayAge(user.age)}</div>
               </div>
               {currentUser && (
                 <Button
@@ -58,14 +81,14 @@ function UsersPage() {
           );
         })}
       <div className="heading-role heading-users">Пользователи</div>
-      {users
-        .filter((user: IUser) => user.role === "USER")
+      {Object.values(users)
+        .filter((user: IUser) => user.role === USER)
         .map((user: IUser) => {
           return (
             <div key={user.id} className="user">
               <div className="personal-info">
                 <div className="display-name">{user.displayName}</div>
-                <div className="age">{user.age} лет</div>
+                <div className="age">{displayAge(user.age)}</div>
               </div>
               {currentUser && (
                 <Button
