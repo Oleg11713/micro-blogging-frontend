@@ -114,7 +114,7 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
               required
             />
           </div>
-          <div>Загруженные картинки</div>
+          <div>{uploadedImages.length !== 0 && "Загруженные картинки"}</div>
           {uploadedImages.length !== 0 ? (
             uploadedImages.map(image => {
               return (
@@ -136,8 +136,8 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
           ) : (
             <div>Нет исходных картинок</div>
           )}
-          <div>Новые картинки</div>
-          {newImages &&
+          <div>{newImages.length !== 0 && "Новые картинки"}</div>
+          {newImages.length !== 0 &&
             newImages.map(image => {
               return (
                 <div key={image.name} className="image">
