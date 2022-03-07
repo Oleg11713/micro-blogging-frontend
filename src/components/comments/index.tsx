@@ -41,7 +41,7 @@ export const Comments: React.FC<ICommentsProps> = ({ post, user }) => {
   const [selectedComment, setSelectedComment] = useState<IComment>({
     content: "",
     id: 0,
-    postId: 0,
+    publicationId: 0,
     userId: 0,
   });
   const [loading, setLoading] = useState(true);

@@ -11,13 +11,13 @@ import { IComment } from "../../interfaces/IComment";
 import "./styles.scss";
 
 interface IAddCommentFormProps {
-  postId?: number;
+  publicationId: number;
   handleAddFormHide(): void;
 }
 
 export const AddCommentForm: React.FC<IAddCommentFormProps> = ({
   handleAddFormHide,
-  postId,
+  publicationId,
 }) => {
   const [content, setContent] = useState("");
   const history = useHistory();
@@ -32,7 +32,7 @@ export const AddCommentForm: React.FC<IAddCommentFormProps> = ({
       const comment: IComment = {
         content,
         userId: currentUser.id,
-        postId,
+        publicationId,
       };
       await createComment(comment);
     } finally {

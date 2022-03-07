@@ -157,7 +157,7 @@ function PostPage() {
         {showAddComment && (
           <AddCommentForm
             handleAddFormHide={handleAddCommentHide}
-            postId={currentPost.id}
+            publicationId={currentPost.id}
           />
         )}
         <span className="heading">Комментарии</span>
