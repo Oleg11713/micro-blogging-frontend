@@ -35,7 +35,7 @@ function MainPage() {
     id: 0,
     title: "",
     userId: 0,
-    images: {},
+    images: "",
   });
 
   useEffect(() => {
@@ -85,6 +85,7 @@ function MainPage() {
         posts
           .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
           .map((post: IPost) => {
+            const images = post.images.split(",");
             return (
               <div key={post.id} className="post-container">
                 {users &&
@@ -121,9 +122,9 @@ function MainPage() {
                   <div className="info">
                     <div className="title">{post.title}</div>
                     <div className="content">{post.content}</div>
-                    {Object.values(post.images).length > 1 ? (
+                    {images.length > 1 ? (
                       <AliceCarousel>
-                        {Object.values(post.images).map((image: string) => {
+                        {images.map((image: string) => {
                           const path = process.env.REACT_APP_API_URL + image;
                           return (
                             <img
@@ -137,7 +138,7 @@ function MainPage() {
                         })}
                       </AliceCarousel>
                     ) : (
-                      Object.values(post.images).map((image: string) => {
+                      images.map((image: string) => {
                         const path = process.env.REACT_APP_API_URL + image;
                         return (
                           <img

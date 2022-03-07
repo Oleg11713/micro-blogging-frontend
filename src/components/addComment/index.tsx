@@ -11,7 +11,7 @@ import { IComment } from "../../interfaces/IComment";
 import "./styles.scss";
 
 interface IAddCommentFormProps {
-  postId: number;
+  postId?: number;
   handleAddFormHide(): void;
 }
 

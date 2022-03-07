@@ -22,6 +22,7 @@ import "./alice-carousel.scss";
 
 function PostPage() {
   const currentPost = useSelector(selectCurrentPost);
+  const images = currentPost ? currentPost.images.split(",") : [];
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string | undefined }>();
@@ -122,9 +123,9 @@ function PostPage() {
         <div className="info">
           <div className="title">{currentPost.title}</div>
           <div className="content">{currentPost.content}</div>
-          {Object.values(currentPost.images).length > 1 ? (
+          {images.length > 1 ? (
             <AliceCarousel>
-              {Object.values(currentPost.images).map((image: string) => {
+              {images.map((image: string) => {
                 const path = process.env.REACT_APP_API_URL + image;
                 return (
                   <img
@@ -137,7 +138,7 @@ function PostPage() {
               })}
             </AliceCarousel>
           ) : (
-            Object.values(currentPost.images).map((image: string) => {
+            images.map((image: string) => {
               const path = process.env.REACT_APP_API_URL + image;
               return (
                 <img

@@ -12,6 +12,7 @@ import { MAIN_PAGE_ROUTE } from "./utils/constsRoutes";
 import { authRoutes, publicRoutes } from "./routes";
 
 import "./App.scss";
+import { IUser } from "./interfaces/IUser";
 
 function App() {
   const currentUser = useSelector(selectCurrentUser);
@@ -20,9 +21,9 @@ function App() {
 
   useEffect(() => {
     authCheck()
-      .then(user => dispatch(setCurrentUser(user)))
-      .catch(e => {
-        toast.warning(e.response.data.message, {
+      .then((user: IUser) => dispatch(setCurrentUser(user)))
+      .catch(() => {
+        toast.warning("Пользователь не авторизован", {
           className: "toast-error",
           position: toast.POSITION.BOTTOM_CENTER,
         });

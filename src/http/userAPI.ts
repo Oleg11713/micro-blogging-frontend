@@ -9,19 +9,19 @@ export const registration = async (
   email: string,
   password: string,
 ) => {
-  const { data } = await host.post("api/user/registration", {
+  const { data } = await host.post("auth/signup", {
     displayName,
     age,
     email,
     password,
   });
-  localStorage.setItem("token", data.token);
-  return jwtDecode(data.token);
+  localStorage.setItem("token", data);
+  return jwtDecode(data);
 };
 
 export const login = async (email: string, password: string) => {
-  const { data } = await host.post("api/user/login", { email, password });
-  localStorage.setItem("token", data.token);
+  const { data } = await host.post("auth/signin", { email, password });
+  localStorage.setItem("token", data);
   let user: IUser = {
     id: 0,
     displayName: "",
@@ -32,13 +32,15 @@ export const login = async (email: string, password: string) => {
     isActivated: false,
     activationLink: "",
   };
-  user = jwtDecode(data.token);
+  user = jwtDecode(data);
   return user;
 };
 
 export const authCheck = async () => {
-  const { data } = await authHost.get("api/user/auth");
-  localStorage.setItem("token", data.token);
+  const data = localStorage.getItem("token");
+  if (data != null) {
+    localStorage.setItem("token", data);
+  }
   let user: IUser = {
     id: 0,
     displayName: "",
@@ -49,7 +51,9 @@ export const authCheck = async () => {
     isActivated: false,
     activationLink: "",
   };
-  user = jwtDecode(data.token);
+  if (typeof data === "string") {
+    user = jwtDecode(data);
+  }
   return user;
 };
 
@@ -59,11 +63,11 @@ export const resetToken = () => {
 };
 
 export const fetchAllUsers = async () => {
-  const { data } = await host.get("api/user/viewAllUsers");
+  const { data } = await host.get("auth/viewAllUsers");
   return data;
 };
 
 export const fetchOneUser = async (id: string | undefined) => {
-  const { data } = await authHost.get(`api/user/viewUser/${id}`);
+  const { data } = await authHost.get(`auth/viewUser/${id}`);
   return data;
 };

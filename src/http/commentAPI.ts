@@ -1,13 +1,13 @@
-import { authHost, host } from "./index";
+import { authHost } from "./index";
 import { IComment } from "../interfaces/IComment";
 
 export const fetchAllComments = async () => {
-  const { data } = await host.get("api/comment/viewAllComments");
+  const { data } = await authHost.get("comments/viewAllComments");
   return data;
 };
 
 export const createComment = async (comment: IComment) => {
-  const { data } = await authHost.post("api/comment/createComment", comment);
+  const { data } = await authHost.post("comments/createComment", comment);
   return data;
 };
 
@@ -16,13 +16,13 @@ export const updateComment = async (updatedComment: {
   content: string;
 }) => {
   const { data } = await authHost.patch(
-    `/api/comment/updateComment`,
+    `comments/updateComment`,
     updatedComment,
   );
   return data;
 };
 
 export const deleteComment = async (id: number) => {
-  const { data } = await authHost.delete(`api/comment/deleteComment/${id}`);
+  const { data } = await authHost.delete(`comments/deleteComment/${id}`);
   return data;
 };

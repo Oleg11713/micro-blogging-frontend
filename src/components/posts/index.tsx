@@ -42,7 +42,7 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
     id: 0,
     title: "",
     userId: 0,
-    images: {},
+    images: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -95,6 +95,7 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
       )}
       {sortedAndFilteredPosts.length > 0 ? (
         sortedAndFilteredPosts.map((post: IPost) => {
+          const images = post.images.split(",");
           return (
             <div key={post.id} className="post">
               {currentUser?.id === user?.id && (
@@ -140,9 +141,9 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
               <div className="info">
                 <div className="title">{post.title}</div>
                 <div className="content">{post.content}</div>
-                {Object.values(post.images).length > 1 ? (
+                {images.length > 1 ? (
                   <AliceCarousel>
-                    {Object.values(post.images).map((image: string) => {
+                    {images.map((image: string) => {
                       const path = process.env.REACT_APP_API_URL + image;
                       return (
                         <img
@@ -156,7 +157,7 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
                     })}
                   </AliceCarousel>
                 ) : (
-                  Object.values(post.images).map((image: string) => {
+                  images.map((image: string) => {
                     const path = process.env.REACT_APP_API_URL + image;
                     return (
                       <img

@@ -29,9 +29,9 @@ export const Comments: React.FC<ICommentsProps> = ({ post, user }) => {
     comments &&
     comments
       .sort((a: { id: number }, b: { id: number }) => a.id - b.id)
-      .filter((comment: { postId: number; userId: number }) => {
+      .filter((comment: { publicationId: number; userId: number }) => {
         return post
-          ? comment.postId === post.id
+          ? comment.publicationId === post.id
           : user && comment.userId === user.id;
       });
   const currentUser = useSelector(selectCurrentUser);

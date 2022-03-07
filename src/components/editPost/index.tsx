@@ -12,7 +12,7 @@ import "./styles.scss";
 interface IEditPostForm {
   initialTitle: string;
   initialContent: string;
-  initialImages: Object;
+  initialImages: string;
   postId: number;
   handleEditFormHide(): void;
 }
@@ -27,7 +27,7 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
   const [uploadedImages, setUploadedImages] = useState(
-    Object.values(initialImages),
+    initialImages.split(","),
   );
   const [newImages, setNewImages] = useState<File[]>([]);
 
@@ -47,7 +47,7 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
       formData.append("id", postId.toString());
       formData.append("title", title);
       formData.append("content", content);
-      uploadedImages.map(image => formData.append("uploadedImages", image));
+      uploadedImages.map(image => formData.append("images", image));
       newImages.map(image => formData.append("newImages", image));
       await updatePost(formData);
     } finally {
