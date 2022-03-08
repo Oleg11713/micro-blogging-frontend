@@ -141,9 +141,24 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
               <div className="info">
                 <div className="title">{post.title}</div>
                 <div className="content">{post.content}</div>
-                {images.length > 1 ? (
-                  <AliceCarousel>
-                    {images.map((image: string) => {
+                {images[0] !== "" &&
+                  (images.length > 1 ? (
+                    <AliceCarousel>
+                      {images.map((image: string) => {
+                        const path = process.env.REACT_APP_API_URL + image;
+                        return (
+                          <img
+                            key={image}
+                            className="sliderimg"
+                            style={{ width: "100%" }}
+                            src={path}
+                            alt="post"
+                          />
+                        );
+                      })}
+                    </AliceCarousel>
+                  ) : (
+                    images.map((image: string) => {
                       const path = process.env.REACT_APP_API_URL + image;
                       return (
                         <img
@@ -154,22 +169,8 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
                           alt="post"
                         />
                       );
-                    })}
-                  </AliceCarousel>
-                ) : (
-                  images.map((image: string) => {
-                    const path = process.env.REACT_APP_API_URL + image;
-                    return (
-                      <img
-                        key={image}
-                        className="sliderimg"
-                        style={{ width: "100%" }}
-                        src={path}
-                        alt="post"
-                      />
-                    );
-                  })
-                )}
+                    })
+                  ))}
               </div>
               <div className="comment-icon">
                 <IconButton
