@@ -1,7 +1,7 @@
 import { actionTypes } from "./types";
 import { IUser } from "../../interfaces/IUser";
 
-export const setCurrentUser = (currentUser: IUser) => ({
+export const setCurrentUser = (currentUser: void | IUser) => ({
   type: actionTypes.SET_CURRENT_USER,
   payload: currentUser,
 });
