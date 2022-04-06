@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, IconButton } from "@material-ui/core";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import { selectCurrentUser } from "../../redux/user/selectors";
-import { createComment } from "../../http/commentAPI";
+import { createComment } from "../../redux/comment/actions";
 import { IComment } from "../../interfaces/IComment";
 
 import "./styles.scss";
@@ -22,6 +22,7 @@ export const AddCommentForm: React.FC<IAddCommentFormProps> = ({
   const [content, setContent] = useState("");
   const history = useHistory();
   const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -34,7 +35,7 @@ export const AddCommentForm: React.FC<IAddCommentFormProps> = ({
         userId: currentUser.id,
         publicationId,
       };
-      await createComment(comment);
+      dispatch(createComment(comment));
     } finally {
       handleAddFormHide();
       history.go(0);

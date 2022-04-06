@@ -10,11 +10,9 @@ import AliceCarousel from "react-alice-carousel";
 import { ConfirmationDelete } from "../../components/confirmationDelete";
 import { AddPostForm } from "../../components/addPost";
 import { selectCurrentUser, selectUsers } from "../../redux/user/selectors";
-import { setUsers } from "../../redux/user/actions";
 import { selectPosts } from "../../redux/post/selectors";
-import { setPosts } from "../../redux/post/actions";
-import { fetchAllPosts } from "../../http/postAPI";
-import { fetchAllUsers } from "../../http/userAPI";
+import { fetchAllPosts } from "../../redux/post/actions";
+import { fetchAllUsers } from "../../redux/user/actions";
 import { IPost } from "../../interfaces/IPost";
 import { IUser } from "../../interfaces/IUser";
 import { ADMIN } from "../../utils/constsRoles";
@@ -39,12 +37,8 @@ function MainPage() {
   });
 
   useEffect(() => {
-    fetchAllPosts().then(data => {
-      dispatch(setPosts(data));
-    });
-    fetchAllUsers().then(data => {
-      dispatch(setUsers(data));
-    });
+    dispatch(fetchAllPosts());
+    dispatch(fetchAllUsers());
   }, []);
 
   const handleAddFormHide = () => {

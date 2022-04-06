@@ -1,11 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, IconButton } from "@material-ui/core";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-import { deletePost } from "../../http/postAPI";
-import { deleteComment } from "../../http/commentAPI";
+import { deletePost } from "../../redux/post/actions";
+import { deleteComment } from "../../redux/comment/actions";
 import { selectComments } from "../../redux/comment/selectors";
 
 import "./styles.scss";
@@ -25,6 +25,7 @@ export const ConfirmationDelete: React.FC<IConfirmationDeleteProps> = ({
 }) => {
   const history = useHistory();
   const comments = useSelector(selectComments);
+  const dispatch = useDispatch();
 
   const handleDelete = async () => {
     try {
@@ -37,9 +38,9 @@ export const ConfirmationDelete: React.FC<IConfirmationDeleteProps> = ({
                 comment.postId === postId,
             )
             .map(async (comment: { id: number }) => {
-              await deleteComment(comment.id);
+              dispatch(deleteComment(comment.id));
             });
-        await deletePost(postId);
+        dispatch(deletePost(postId));
       }
     } finally {
       if (postPage) history.push("/main");

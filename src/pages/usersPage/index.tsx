@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Spinner } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 
-import { fetchAllUsers } from "../../http/userAPI";
+import { fetchAllUsers } from "../../redux/user/actions";
 import { selectCurrentUser, selectUsers } from "../../redux/user/selectors";
-import { setUsers } from "../../redux/user/actions";
 import { IUser } from "../../interfaces/IUser";
 import { ADMIN, USER } from "../../utils/constsRoles";
 
@@ -17,21 +15,10 @@ function UsersPage() {
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   const history = useHistory();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAllUsers()
-      .then(data => {
-        dispatch(setUsers(data));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    dispatch(fetchAllUsers());
   }, [dispatch]);
-
-  if (loading) {
-    return <Spinner animation="grow" />;
-  }
 
   const displayAge = (age: number) => {
     let resultStringAge = "";

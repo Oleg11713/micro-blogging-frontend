@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Spinner } from "react-bootstrap";
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -10,8 +9,7 @@ import AliceCarousel from "react-alice-carousel";
 
 import { selectCurrentUser } from "../../redux/user/selectors";
 import { selectPosts } from "../../redux/post/selectors";
-import { setPosts } from "../../redux/post/actions";
-import { fetchAllPosts } from "../../http/postAPI";
+import { fetchAllPosts } from "../../redux/post/actions";
 import { EditPostForm } from "../editPost";
 import { ConfirmationDelete } from "../confirmationDelete";
 import { IUser } from "../../interfaces/IUser";
@@ -44,21 +42,10 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
     userId: 0,
     images: "",
   });
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAllPosts()
-      .then(data => {
-        dispatch(setPosts(data));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    dispatch(fetchAllPosts());
   }, [dispatch]);
-
-  if (loading) {
-    return <Spinner animation="grow" />;
-  }
 
   const handleEditFormShow = () => {
     setShowEditForm(true);
@@ -93,7 +80,7 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
           postId={selectedPost.id}
         />
       )}
-      {sortedAndFilteredPosts.length > 0 ? (
+      {sortedAndFilteredPosts ? (
         sortedAndFilteredPosts.map((post: IPost) => {
           const images = post.images.split(",");
           return (

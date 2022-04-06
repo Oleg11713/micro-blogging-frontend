@@ -46,6 +46,7 @@
       }
     ],
     "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
     "react/prop-types": 0,
     "no-shadow": "off",
     "semi": ["error", "always"],

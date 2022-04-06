@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Spinner } from "react-bootstrap";
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { selectCurrentUser } from "../../redux/user/selectors";
 import { selectComments } from "../../redux/comment/selectors";
-import { setComments } from "../../redux/comment/actions";
-import { fetchAllComments } from "../../http/commentAPI";
+import { fetchAllComments } from "../../redux/comment/actions";
 import { EditCommentForm } from "../editComment";
 import { ConfirmationDelete } from "../confirmationDelete";
 import { IUser } from "../../interfaces/IUser";
@@ -44,21 +42,10 @@ export const Comments: React.FC<ICommentsProps> = ({ post, user }) => {
     publicationId: 0,
     userId: 0,
   });
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAllComments()
-      .then(data => {
-        dispatch(setComments(data));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    dispatch(fetchAllComments());
   }, [dispatch]);
-
-  if (loading) {
-    return <Spinner animation="grow" />;
-  }
 
   const handleEditFormShow = () => {
     setShowEditForm(true);
@@ -91,7 +78,7 @@ export const Comments: React.FC<ICommentsProps> = ({ post, user }) => {
           commentId={selectedComment.id}
         />
       )}
-      {sortedAndFilteredComments.length > 0 ? (
+      {sortedAndFilteredComments ? (
         sortedAndFilteredComments.map((comment: IComment) => {
           return (
             <div key={comment.id} className="comment">

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Button, IconButton } from "@material-ui/core";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-import { updateComment } from "../../http/commentAPI";
+import { updateComment } from "../../redux/comment/actions";
 
 import "./styles.scss";
 
@@ -20,6 +21,7 @@ export const EditCommentForm: React.FC<IEditCommentFormProps> = ({
 }) => {
   const [content, setContent] = useState(initialContent);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -31,7 +33,7 @@ export const EditCommentForm: React.FC<IEditCommentFormProps> = ({
         id: commentId,
         content,
       };
-      await updateComment(comment);
+      dispatch(updateComment(comment));
     } finally {
       handleEditFormHide();
       history.go(0);
