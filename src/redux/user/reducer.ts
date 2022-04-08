@@ -22,7 +22,7 @@ export const userReducer = (
         ...state,
         viewedUser: action.payload,
       };
-    case actionTypes.FETCH_ALL_USERS:
+    case actionTypes.SET_USERS:
       return {
         ...state,
         users: action.payload,

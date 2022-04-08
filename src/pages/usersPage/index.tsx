@@ -45,51 +45,53 @@ function UsersPage() {
   return (
     <div className="users-page">
       <div className="heading-role">Администратор</div>
-      {Object.values(users)
-        .filter((user: IUser) => user.role === ADMIN)
-        .map((user: IUser) => {
-          return (
-            <div key={user.id} className="user">
-              <div className="personal-info">
-                <div className="display-name">{user.displayName}</div>
-                <div className="age">{displayAge(user.age)}</div>
+      {users &&
+        Object.values(users)
+          .filter((user: IUser) => user.role === ADMIN)
+          .map((user: IUser) => {
+            return (
+              <div key={user.id} className="user">
+                <div className="personal-info">
+                  <div className="display-name">{user.displayName}</div>
+                  <div className="age">{displayAge(user.age)}</div>
+                </div>
+                {currentUser && (
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      history.push(`/userProfile/${user.id}`);
+                    }}
+                  >
+                    Посмотреть профиль
+                  </Button>
+                )}
               </div>
-              {currentUser && (
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    history.push(`/userProfile/${user.id}`);
-                  }}
-                >
-                  Посмотреть профиль
-                </Button>
-              )}
-            </div>
-          );
-        })}
+            );
+          })}
       <div className="heading-role heading-users">Пользователи</div>
-      {Object.values(users)
-        .filter((user: IUser) => user.role === USER)
-        .map((user: IUser) => {
-          return (
-            <div key={user.id} className="user">
-              <div className="personal-info">
-                <div className="display-name">{user.displayName}</div>
-                <div className="age">{displayAge(user.age)}</div>
+      {users &&
+        Object.values(users)
+          .filter((user: IUser) => user.role === USER)
+          .map((user: IUser) => {
+            return (
+              <div key={user.id} className="user">
+                <div className="personal-info">
+                  <div className="display-name">{user.displayName}</div>
+                  <div className="age">{displayAge(user.age)}</div>
+                </div>
+                {currentUser && (
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      history.push(`/userProfile/${user.id}`);
+                    }}
+                  >
+                    Посмотреть профиль
+                  </Button>
+                )}
               </div>
-              {currentUser && (
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    history.push(`/userProfile/${user.id}`);
-                  }}
-                >
-                  Посмотреть профиль
-                </Button>
-              )}
-            </div>
-          );
-        })}
+            );
+          })}
     </div>
   );
 }

@@ -62,7 +62,12 @@ export const resetToken = () => {
   return "";
 };
 
-export const fetchOneUser = async (id: string | undefined) => {
+export const fetchAllUsersFromApi = async () => {
+  const { data } = await host.get("auth/viewAllUsers");
+  return data;
+};
+
+export const fetchOneUser = async (id: string) => {
   const { data } = await authHost.get(`auth/viewUser/${id}`);
   return data;
 };

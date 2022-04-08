@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 import { Button, IconButton } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -8,29 +9,38 @@ import AliceCarousel from "react-alice-carousel";
 
 import { selectCurrentUser } from "../../redux/user/selectors";
 import { selectCurrentPost } from "../../redux/post/selectors";
-import { fetchOnePost } from "../../redux/post/actions";
+import { setCurrentPost } from "../../redux/post/actions";
+import { fetchOnePost } from "../../http/postAPI";
 import { AddCommentForm } from "../../components/addComment";
+import { Comments } from "../../components/comments";
 import { EditPostForm } from "../../components/editPost";
 import { ConfirmationDelete } from "../../components/confirmationDelete";
-import { Comments } from "../../components/comments";
 import { ADMIN } from "../../utils/constsRoles";
-
-import "./styles.scss";
-import "./alice-carousel.scss";
 
 function PostPage() {
   const currentPost = useSelector(selectCurrentPost);
   const images = currentPost ? currentPost.images.split(",") : [];
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
-  const { id } = useParams<{ id: string | undefined }>();
+  const { id } = useParams<{ id: string }>();
   const [showAddComment, setShowAddComment] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showDeleteForm, setShowDeleteForm] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(fetchOnePost(id));
+    fetchOnePost(id)
+      .then(data => {
+        dispatch(setCurrentPost(data));
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [dispatch]);
+
+  if (loading) {
+    return <Spinner animation="grow" />;
+  }
 
   const handleAddCommentHide = () => {
     setShowAddComment(false);

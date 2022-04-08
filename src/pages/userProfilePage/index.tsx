@@ -20,7 +20,7 @@ function UserProfilePage() {
   const currentUser = useSelector(selectCurrentUser);
   const [age, setAge] = useState("");
   const dispatch = useDispatch();
-  const { id } = useParams<{ id: string | undefined }>();
+  const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

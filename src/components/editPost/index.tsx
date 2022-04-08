@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { Button, Fab, IconButton } from "@material-ui/core";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 
-import { updatePost } from "../../redux/post/actions";
+import { updatePost } from "../../http/postAPI";
 
 import "./styles.scss";
 
@@ -32,7 +31,6 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
   );
   const [newImages, setNewImages] = useState<File[]>([]);
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -50,7 +48,7 @@ export const EditPostForm: React.FC<IEditPostForm> = ({
       formData.append("content", content);
       uploadedImages.map(image => formData.append("images", image));
       newImages.map(image => formData.append("newImages", image));
-      dispatch(updatePost(formData));
+      await updatePost(formData);
     } finally {
       handleEditFormHide();
       history.go(0);

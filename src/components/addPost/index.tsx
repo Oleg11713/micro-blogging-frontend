@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button, Fab, IconButton } from "@material-ui/core";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import { selectCurrentUser } from "../../redux/user/selectors";
-import { createPost } from "../../redux/post/actions";
+import { createPost } from "../../http/postAPI";
 
 import "./styles.scss";
 
@@ -22,7 +22,6 @@ export const AddPostForm: React.FC<IAddPostFormProps> = ({
   const [content, setContent] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const history = useHistory();
-  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +39,7 @@ export const AddPostForm: React.FC<IAddPostFormProps> = ({
       formData.append("content", content);
       images.map(image => formData.append("images", image));
       formData.append("userId", currentUser.id.toString());
-      dispatch(createPost(formData));
+      await createPost(formData);
     } finally {
       handleAddFormHide();
       history.go(0);
