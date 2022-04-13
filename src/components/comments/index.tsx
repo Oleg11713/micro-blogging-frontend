@@ -6,6 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { selectCurrentUser } from "../../redux/user/selectors";
 import { selectComments } from "../../redux/comment/selectors";
+import { selectLoading } from "../../redux/app/selectors";
 import { fetchAllComments } from "../../redux/comment/actions";
 import { EditCommentForm } from "../editComment";
 import { ConfirmationDelete } from "../confirmationDelete";
@@ -34,6 +35,7 @@ export const Comments: React.FC<ICommentsProps> = ({ post, user }) => {
       });
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
+  const loading = useSelector(selectLoading);
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
   const [showDeleteForm, setShowDeleteForm] = useState<boolean>(false);
   const [selectedComment, setSelectedComment] = useState<IComment>({
@@ -78,7 +80,11 @@ export const Comments: React.FC<ICommentsProps> = ({ post, user }) => {
           commentId={selectedComment.id}
         />
       )}
-      {sortedAndFilteredComments ? (
+      {loading ? (
+        <div className="spinner-border text-primary" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      ) : sortedAndFilteredComments ? (
         sortedAndFilteredComments.map((comment: IComment) => {
           return (
             <div key={comment.id} className="comment">

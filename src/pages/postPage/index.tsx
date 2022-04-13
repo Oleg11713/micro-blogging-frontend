@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Spinner } from "react-bootstrap";
 import { Button, IconButton } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -17,6 +16,9 @@ import { EditPostForm } from "../../components/editPost";
 import { ConfirmationDelete } from "../../components/confirmationDelete";
 import { ADMIN } from "../../utils/constsRoles";
 
+import "./styles.scss";
+import "./alice-carousel.scss";
+
 function PostPage() {
   const currentPost = useSelector(selectCurrentPost);
   const images = currentPost ? currentPost.images.split(",") : [];
@@ -26,21 +28,12 @@ function PostPage() {
   const [showAddComment, setShowAddComment] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showDeleteForm, setShowDeleteForm] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchOnePost(id)
-      .then(data => {
-        dispatch(setCurrentPost(data));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    fetchOnePost(id).then(data => {
+      dispatch(setCurrentPost(data));
+    });
   }, [dispatch]);
-
-  if (loading) {
-    return <Spinner animation="grow" />;
-  }
 
   const handleAddCommentHide = () => {
     setShowAddComment(false);

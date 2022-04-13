@@ -9,6 +9,7 @@ import AliceCarousel from "react-alice-carousel";
 
 import { selectCurrentUser } from "../../redux/user/selectors";
 import { selectPosts } from "../../redux/post/selectors";
+import { selectLoading } from "../../redux/app/selectors";
 import { fetchAllPosts } from "../../redux/post/actions";
 import { EditPostForm } from "../editPost";
 import { ConfirmationDelete } from "../confirmationDelete";
@@ -32,6 +33,7 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
       .filter((post: IPost) => post.userId === user.id);
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
+  const loading = useSelector(selectLoading);
   const history = useHistory();
   const [showEditForm, setShowEditForm] = useState(false);
   const [showDeleteForm, setShowDeleteForm] = useState(false);
@@ -80,7 +82,11 @@ export const Posts: React.FC<IPostsProps> = ({ user }) => {
           postId={selectedPost.id}
         />
       )}
-      {sortedAndFilteredPosts ? (
+      {loading ? (
+        <div className="spinner-border text-primary" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      ) : sortedAndFilteredPosts ? (
         sortedAndFilteredPosts.map((post: IPost) => {
           const images = post.images.split(",");
           return (

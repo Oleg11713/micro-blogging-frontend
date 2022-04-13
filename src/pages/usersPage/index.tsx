@@ -5,6 +5,7 @@ import { Button } from "@material-ui/core";
 
 import { fetchAllUsers } from "../../redux/user/actions";
 import { selectCurrentUser, selectUsers } from "../../redux/user/selectors";
+import { selectAlert, selectLoading } from "../../redux/app/selectors";
 import { IUser } from "../../interfaces/IUser";
 import { ADMIN, USER } from "../../utils/constsRoles";
 
@@ -15,6 +16,8 @@ function UsersPage() {
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   const history = useHistory();
+  const loading = useSelector(selectLoading);
+  const alert = useSelector(selectAlert);
 
   useEffect(() => {
     dispatch(fetchAllUsers());
@@ -43,56 +46,73 @@ function UsersPage() {
   };
 
   return (
-    <div className="users-page">
-      <div className="heading-role">Администратор</div>
-      {users &&
-        Object.values(users)
-          .filter((user: IUser) => user.role === ADMIN)
-          .map((user: IUser) => {
-            return (
-              <div key={user.id} className="user">
-                <div className="personal-info">
-                  <div className="display-name">{user.displayName}</div>
-                  <div className="age">{displayAge(user.age)}</div>
+    <>
+      {alert && (
+        <div
+          className="alert alert-primary"
+          role="alert"
+          style={{ marginBottom: "0" }}
+        >
+          {alert}
+        </div>
+      )}
+      <div className="users-page">
+        <div className="heading-role">Администратор</div>
+        {loading ? (
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : (
+          users &&
+          Object.values(users)
+            .filter((user: IUser) => user.role === ADMIN)
+            .map((user: IUser) => {
+              return (
+                <div key={user.id} className="user">
+                  <div className="personal-info">
+                    <div className="display-name">{user.displayName}</div>
+                    <div className="age">{displayAge(user.age)}</div>
+                  </div>
+                  {currentUser && (
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        history.push(`/userProfile/${user.id}`);
+                      }}
+                    >
+                      Посмотреть профиль
+                    </Button>
+                  )}
                 </div>
-                {currentUser && (
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      history.push(`/userProfile/${user.id}`);
-                    }}
-                  >
-                    Посмотреть профиль
-                  </Button>
-                )}
-              </div>
-            );
-          })}
-      <div className="heading-role heading-users">Пользователи</div>
-      {users &&
-        Object.values(users)
-          .filter((user: IUser) => user.role === USER)
-          .map((user: IUser) => {
-            return (
-              <div key={user.id} className="user">
-                <div className="personal-info">
-                  <div className="display-name">{user.displayName}</div>
-                  <div className="age">{displayAge(user.age)}</div>
+              );
+            })
+        )}
+        <div className="heading-role heading-users">Пользователи</div>
+        {users &&
+          Object.values(users)
+            .filter((user: IUser) => user.role === USER)
+            .map((user: IUser) => {
+              return (
+                <div key={user.id} className="user">
+                  <div className="personal-info">
+                    <div className="display-name">{user.displayName}</div>
+                    <div className="age">{displayAge(user.age)}</div>
+                  </div>
+                  {currentUser && (
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        history.push(`/userProfile/${user.id}`);
+                      }}
+                    >
+                      Посмотреть профиль
+                    </Button>
+                  )}
                 </div>
-                {currentUser && (
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      history.push(`/userProfile/${user.id}`);
-                    }}
-                  >
-                    Посмотреть профиль
-                  </Button>
-                )}
-              </div>
-            );
-          })}
-    </div>
+              );
+            })}
+      </div>
+    </>
   );
 }
 

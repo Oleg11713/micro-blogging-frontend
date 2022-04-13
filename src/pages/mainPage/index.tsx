@@ -10,6 +10,7 @@ import AliceCarousel from "react-alice-carousel";
 import { ConfirmationDelete } from "../../components/confirmationDelete";
 import { AddPostForm } from "../../components/addPost";
 import { selectCurrentUser, selectUsers } from "../../redux/user/selectors";
+import { selectAlert, selectLoading } from "../../redux/app/selectors";
 import { selectPosts } from "../../redux/post/selectors";
 import { fetchAllPosts } from "../../redux/post/actions";
 import { fetchAllUsers } from "../../redux/user/actions";
@@ -23,6 +24,8 @@ import "react-alice-carousel/lib/alice-carousel.css";
 function MainPage() {
   const users = useSelector(selectUsers);
   const posts = useSelector(selectPosts);
+  const loading = useSelector(selectLoading);
+  const alert = useSelector(selectAlert);
   const currentUser = useSelector(selectCurrentUser);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -58,68 +61,97 @@ function MainPage() {
   };
 
   return (
-    <div className="main-page">
-      {showAddForm && <AddPostForm handleAddFormHide={handleAddFormHide} />}
-      {showDeleteForm && (
-        <ConfirmationDelete
-          handleDeleteFormHide={handleDeleteFormHide}
-          postId={selectedPost.id}
-        />
-      )}
-      {currentUser && (
-        <Button
-          className="add-post-button"
-          variant="contained"
-          onClick={handleAddFormShow}
+    <>
+      {alert && (
+        <div
+          className="alert alert-primary"
+          role="alert"
+          style={{ marginBottom: "0" }}
         >
-          Добавить новый пост
-        </Button>
+          {alert}
+        </div>
       )}
-      {posts?.length > 0 ? (
-        posts
-          .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
-          .map((post: IPost) => {
-            const images = post.images.split(",");
-            return (
-              <div key={post.id} className="post-container">
-                {users &&
-                  Object.values(users)
-                    .filter((user: IUser) => post.userId === user.id)
-                    .map((user: IUser) => {
-                      return (
-                        <Link
-                          key={user.displayName}
-                          className="user-display-name"
-                          to={`/userProfile/${user.id}`}
+      <div className="main-page">
+        {showAddForm && <AddPostForm handleAddFormHide={handleAddFormHide} />}
+        {showDeleteForm && (
+          <ConfirmationDelete
+            handleDeleteFormHide={handleDeleteFormHide}
+            postId={selectedPost.id}
+          />
+        )}
+        {currentUser && (
+          <Button
+            className="add-post-button"
+            variant="contained"
+            onClick={handleAddFormShow}
+          >
+            Добавить новый пост
+          </Button>
+        )}
+        {loading ? (
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : posts?.length && users ? (
+          posts
+            .sort((a: { id: number }, b: { id: number }) => b.id - a.id)
+            .map((post: IPost) => {
+              const images = post.images.split(",");
+              return (
+                <div key={post.id} className="post-container">
+                  {users &&
+                    Object.values(users)
+                      .filter((user: IUser) => post.userId === user.id)
+                      .map((user: IUser) => {
+                        return (
+                          <Link
+                            key={user.displayName}
+                            className="user-display-name"
+                            to={`/userProfile/${user.id}`}
+                          >
+                            {user.displayName}
+                          </Link>
+                        );
+                      })}
+                  <div className="post">
+                    {(currentUser?.role === ADMIN ||
+                      currentUser?.id === post.userId) && (
+                      <div className="tools">
+                        <IconButton
+                          className="delete-icon"
+                          aria-label="delete"
+                          size="small"
+                          onClick={() => {
+                            setSelectedPost(post);
+                            handleDeleteFormShow();
+                          }}
                         >
-                          {user.displayName}
-                        </Link>
-                      );
-                    })}
-                <div className="post">
-                  {(currentUser?.role === ADMIN ||
-                    currentUser?.id === post.userId) && (
-                    <div className="tools">
-                      <IconButton
-                        className="delete-icon"
-                        aria-label="delete"
-                        size="small"
-                        onClick={() => {
-                          setSelectedPost(post);
-                          handleDeleteFormShow();
-                        }}
-                      >
-                        <DeleteIcon fontSize="inherit" />
-                      </IconButton>
-                    </div>
-                  )}
-                  <div className="info">
-                    <div className="title">{post.title}</div>
-                    <div className="content">{post.content}</div>
-                    {images[0] !== "" &&
-                      (images.length > 1 ? (
-                        <AliceCarousel>
-                          {images.map((image: string) => {
+                          <DeleteIcon fontSize="inherit" />
+                        </IconButton>
+                      </div>
+                    )}
+                    <div className="info">
+                      <div className="title">{post.title}</div>
+                      <div className="content">{post.content}</div>
+                      {images[0] !== "" &&
+                        (images.length > 1 ? (
+                          <AliceCarousel>
+                            {images.map((image: string) => {
+                              const path =
+                                process.env.REACT_APP_API_URL + image;
+                              return (
+                                <img
+                                  key={image}
+                                  className="sliderimg"
+                                  style={{ width: "100%" }}
+                                  src={path}
+                                  alt="post"
+                                />
+                              );
+                            })}
+                          </AliceCarousel>
+                        ) : (
+                          images.map((image: string) => {
                             const path = process.env.REACT_APP_API_URL + image;
                             return (
                               <img
@@ -130,42 +162,29 @@ function MainPage() {
                                 alt="post"
                               />
                             );
-                          })}
-                        </AliceCarousel>
-                      ) : (
-                        images.map((image: string) => {
-                          const path = process.env.REACT_APP_API_URL + image;
-                          return (
-                            <img
-                              key={image}
-                              className="sliderimg"
-                              style={{ width: "100%" }}
-                              src={path}
-                              alt="post"
-                            />
-                          );
-                        })
-                      ))}
+                          })
+                        ))}
+                    </div>
+                    <IconButton
+                      className="comment-icon"
+                      onClick={() => {
+                        history.push(`/post/${post.id}`);
+                      }}
+                      aria-label="edit"
+                      size="small"
+                    >
+                      <ChatBubbleOutlineIcon fontSize="inherit" />
+                    </IconButton>
                   </div>
-                  <IconButton
-                    className="comment-icon"
-                    onClick={() => {
-                      history.push(`/post/${post.id}`);
-                    }}
-                    aria-label="edit"
-                    size="small"
-                  >
-                    <ChatBubbleOutlineIcon fontSize="inherit" />
-                  </IconButton>
                 </div>
-              </div>
-            );
-          })
-      ) : (
-        <div>Нет постов</div>
-      )}
-      <ToastContainer />
-    </div>
+              );
+            })
+        ) : (
+          <div>Нет постов</div>
+        )}
+        <ToastContainer />
+      </div>
+    </>
   );
 }
 
