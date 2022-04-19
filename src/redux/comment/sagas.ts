@@ -4,10 +4,11 @@ import { setComments } from "./actions";
 import { fetchAllCommentsFromApi } from "../../http/commentAPI";
 import { IComment } from "../../interfaces/IComment";
 import { FETCH_ALL_COMMENTS } from "./types";
-import { hideLoader, showAlert, showLoader } from "../app/actions";
+import { hideAlert, hideLoader, showAlert, showLoader } from "../app/actions";
 
 function* fetchAllCommentsWorker() {
   try {
+    yield put(hideAlert());
     yield put(showLoader());
     const data: IComment[] = yield call(fetchAllCommentsFromApi);
     yield put(setComments(data));
