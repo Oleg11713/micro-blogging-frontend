@@ -1,0 +1,68 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  max-width: 380px;
+  width: 100%;
+
+  .title {
+    margin: 0;
+    display: block;
+    font-size: 38px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 30px auto;
+
+    .MuiFormControl-root {
+      margin-bottom: 20px;
+    }
+
+    input[type="password"] {
+      letter-spacing: 0.3em;
+    }
+
+    .MuiFormLabel-root {
+      cursor: grab;
+      padding-left: 10px;
+    }
+
+    .MuiFormLabel-root.Mui-focused {
+      color: #267dec;
+    }
+
+    .MuiFormLabel-root.Mui-error {
+      color: #f44336;
+    }
+
+    .MuiInput-underline:after {
+      border-bottom: 2px solid black;
+    }
+
+    .MuiInput-underline.Mui-focused:after {
+      border-bottom-color: #267dec;
+    }
+
+    .MuiInput-underline.Mui-error:after {
+      border-bottom-color: #f44336;
+    }
+
+    .MuiInputBase-root {
+      justify-content: center;
+      font-size: 18px;
+      padding-left: 10px;
+    }
+  }
+
+  .hint-for-registration {
+    text-align: start;
+    margin-bottom: 20px;
+
+    .registration-link {
+      text-align: start;
+      color: #267dec;
+    }
+  }
+}

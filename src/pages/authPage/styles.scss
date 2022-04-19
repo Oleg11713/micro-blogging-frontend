@@ -1,0 +1,15 @@
+.sign-in-and-sign-up {
+  margin: 0 auto;
+  max-width: 1200px;
+  text-align: center;
+  height: 76vh;
+  background-color: white;
+  border-radius: 4.8px;
+  padding: 40px 100px 64px;
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 1020px) {
+    padding: 64px 20px;
+  }
+}
