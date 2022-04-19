@@ -1,0 +1,58 @@
+.form-wrapper {
+  padding: 20px;
+  margin: 15px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.add-comment-form {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+}
+
+.cancel-icon {
+  cursor: pointer;
+}
+
+.add-comment-form div + div {
+  margin-top: 10px;
+}
+
+.tools {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.heading {
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.form-input {
+  width: 100%;
+  padding: 4px 5px;
+  border-radius: 8px;
+  border: 1px solid rgb(138, 136, 136);
+}
+
+.form-input:focus::placeholder {
+  color: transparent;
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(1, 1, 1, 0.5);
+}
