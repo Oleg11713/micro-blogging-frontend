@@ -1,0 +1,51 @@
+.delete-form {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  background-color: white;
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.cancel-icon {
+  cursor: pointer;
+}
+
+.delete-form div + div {
+  margin-top: 10px;
+}
+
+.tools {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.confirmation {
+  margin-bottom: 40px;
+  margin-top: 0;
+}
+
+.buttons-container {
+  margin: 0 auto;
+  display: flex;
+  max-width: 200px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(1, 1, 1, 0.5);
+}

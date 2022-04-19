@@ -1,0 +1,77 @@
+.my-profile-page {
+  margin: 0 auto;
+  max-width: 1100px;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  border-radius: 4.8px;
+  padding: 40px 100px 64px;
+  display: flex;
+  flex-direction: column;
+  color: #504f50;
+
+  @media (max-width: 1020px) {
+    padding: 64px 20px;
+  }
+
+  .personal-info {
+    max-width: 400px;
+    width: 100%;
+    padding: 10px;
+    font-family: Bahnschrift, serif;
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+
+  .area {
+    margin: 24px 0;
+    border: 0;
+    width: 100%;
+    border-top: 1px dashed #575556;
+  }
+
+  .activity {
+    font-size: 24px;
+    border-bottom: 1px solid #575556;
+  }
+
+  .posts-and-comments {
+    display: flex;
+    max-width: 1000px;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 50px;
+
+    .posts {
+      width: 50%;
+      padding-right: 50px;
+      border-right: 1px solid #575556;
+    }
+
+    .comments {
+      width: 50%;
+      align-items: start;
+      margin-left: 50px;
+    }
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+
+      .posts {
+        width: 100%;
+        padding-right: 0;
+        border: none;
+      }
+
+      .comments {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 50px;
+      }
+    }
+
+    .heading {
+      font-size: 24px;
+    }
+  }
+}
